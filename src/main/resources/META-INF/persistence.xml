@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             version="3.1">
+
+
+    <persistence-unit name="appstock" transaction-type="RESOURCE_LOCAL">
+
+
+        <!-- Clases a Mapear-->
+        <class>Clases/Producto.kt</class>
+        <class>Clases/Usuario.kt</class>
+        <class>Clases/Proveedores.kt</class>
+
+
+        <properties>
+            <!-- Driver -->
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+
+
+            <!-- URL -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/appstockcontrol" />
+
+
+            <!-- Usuario y Contraseña -->
+            <property name="javax.persistence.jdbc.user" value="root" />
+            <property name="javax.persistence.jdbc.password" value="" />
+
+
+            <!-- Dialecto SQL -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+
+
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+        </properties>
+
+
+    </persistence-unit>
+
+
+</persistence>
