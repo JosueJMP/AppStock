@@ -5,45 +5,52 @@ import java.time.Instant
 import java.util.Date
 
 @Entity
-@Table(name="Productos")
+@Table(name = "Productos")
 class Producto (
 
-    @Column(name = "Nombre", nullable = true,length = 20)
-    val nombre : String,
+    @Column(name = "Categoria")
+    val categoria : String?,
 
-    @Column(name = "Categoria", nullable = false)
-    val categoria : String,
+    @Column(name = "Nombre", nullable = false)
+    var nombre : String?,
 
-    @Column(name = "Descripcion", nullable = false, length = 30)
-    val descripcion : String,
+    @Column(name = "Descripcion")
+    val descripcion : String?,
 
-    @Column(name = "PrecioSinIva", nullable = true)
-    val precioSinIva : Float,
+    @Column(name = "precioSinIVA")
+    var precioSinIva : Float?,
 
-    @Column(name = "Stock", nullable = true)
-    val stock : Int,
+    @Column(name = "precioConIVA")
+    var precioConIva : Float? = precioSinIva?.times(1.21f),
 
-    @ManyToOne(cascade = [CascadeType.MERGE, CascadeType.PERSIST])
-    @JoinColumn(name = "proveedor_id", nullable = false)
-    var proveedor: Proveedor?,
-
-    @Column(name = "fecha_alta")
+    @Column(name = "fechaALta")
     @Temporal(TemporalType.DATE)
     val fechaAlta: Date = Date.from(Instant.now()),
 
+    @Column(name = "Stock")
+    var stock : Int?,
+
+    @ManyToOne(cascade = [CascadeType.MERGE])
+    @JoinColumn(name = "idProveedor")
+    var proveedor : Proveedor?,
+
     @Id
-    @Column(unique = true)
-    var id: String
-){
+    @Column(name = "id", unique = true, nullable = false)
+    val id : String,
 
-    val precioConIva: Float
-        get() = precioSinIva * 1.21f
+    ){
+    //constructor
+    constructor(categoria: String, nombre: String, descripcion: String, precioSinIva: Float, stock: Int, proveedor: Proveedor?)
+            : this(categoria, nombre, descripcion, precioSinIva, precioSinIva * 1.21f, Date.from(Instant.now()), stock, proveedor,
+        "${categoria.take(3)}${nombre.take(3)}${proveedor?.nombre?.take(3)}")
 
+    // Obtener información
     override fun toString(): String {
-        return "Producto(nombre='$nombre', categoria='$categoria', descripcion='$descripcion'," +
-                " precioSinIva=$precioSinIva, stock=$stock, proveedor=$proveedor, fechaAlta=$fechaAlta, id='$id', " +
-                "precioConIva=$precioConIva)"
+        return "Producto(id='$id', categoria='$categoria', nombre='$nombre', descripcion='$descripcion', " +
+                "precioSinIva=$precioSinIva, precioConIva=$precioConIva, fechaAlta=$fechaAlta, stock=$stock, " +
+                "proveedor=${proveedor?.nombre})"
     }
-
-
 }
+
+
+

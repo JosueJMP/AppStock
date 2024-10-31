@@ -4,14 +4,13 @@ import jakarta.persistence.*
 import org.example.Model.*
 import org.example.Utils.HibernateUtils
 
-class UsuarioRepository {
+class ProveedorRepository {
 
-    fun create(user : Usuario) {
+    fun create(proveedor : Proveedor) {
         val em: EntityManager = HibernateUtils.getEntityManager("appstock")
-
         try {
             em.transaction.begin()
-            em.persist(user)
+            em.persist(proveedor)
             em.transaction.commit()
         } catch (e: Exception) {
             em.transaction.rollback()
@@ -21,19 +20,20 @@ class UsuarioRepository {
         }
     }
 
-    fun read(id: String) : Usuario? {
+    fun read(id: Long) : Proveedor? {
         val em: EntityManager = HibernateUtils.getEntityManager("appstock")
         return try {
-            em.find(Usuario::class.java, id)
+            em.find(Proveedor::class.java, id)
         } finally {
             HibernateUtils.closeEntityManager(em)
         }
     }
 
-    fun readAll(): List<Usuario> {
+    fun readAll(): List<Proveedor> {
         val em: EntityManager = HibernateUtils.getEntityManager("appstock")
         return try {
-            val query = em.createQuery("SELECT u FROM Usuario u", Usuario::class.java)
+
+            val query = em.createQuery("SELECT p FROM Proveedor p", Proveedor::class.java)
             query.resultList
         } catch (e: Exception) {
             e.printStackTrace()
@@ -43,11 +43,11 @@ class UsuarioRepository {
         }
     }
 
-    fun update(user: Usuario) {
+    fun update(proveedor: Proveedor) {
         val em: EntityManager = HibernateUtils.getEntityManager("appstock")
         try {
             em.transaction.begin()
-            em.merge(user)
+            em.merge(proveedor)
             em.transaction.commit()
         } catch (e: Exception) {
             em.transaction.rollback()
@@ -57,17 +57,17 @@ class UsuarioRepository {
         }
     }
 
-    fun delete(id: String) {
+    fun delete(id: Long) {
         val em: EntityManager = HibernateUtils.getEntityManager("appstock")
         try {
             em.transaction.begin()
-            val user = em.find(Usuario::class.java, id)
-            if (user != null) {
-                em.remove(user)
+            val proveedor = em.find(Proveedor::class.java, id)
+            if (proveedor != null) {
+                em.remove(proveedor)
                 em.transaction.commit()
             } else {
                 em.transaction.rollback()
-                println("No se encontró el usuario con id $id")
+                println("No se encontró el proveedor con id $id")
             }
         } catch (e: Exception) {
             em.transaction.rollback()

@@ -7,10 +7,9 @@
 
 
         <!-- Clases a Mapear-->
-        <class>Clases/Producto.kt</class>
-        <class>Clases/Usuario.kt</class>
-        <class>Clases/Proveedores.kt</class>
-
+        <class>org.example.Model.Usuario</class>
+        <class>org.example.Model.Producto</class>
+        <class>org.example.Model.Proveedor</class>
 
         <properties>
             <!-- Driver -->
@@ -18,7 +17,7 @@
 
 
             <!-- URL -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/appstockcontrol" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/appstock" />
 
 
             <!-- Usuario y Contraseña -->

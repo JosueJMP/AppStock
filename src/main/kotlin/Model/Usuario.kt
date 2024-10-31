@@ -1,16 +1,16 @@
 package org.example.Model
 
-import  jakarta.persistence.*
+import jakarta.persistence.*
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "Usuarios")
 class Usuario(
 
-    @Id
-    @Column(name = "nombre_usuario")
-    val nombreUsuario: String,
 
-    @Column(nullable = false, length = 20)
-    var password: String
-) {
-}
+    @Column(name = "Contraseña", nullable = false, length = 20)
+    val password: String,
+
+    @Id
+    @Column(name = "nombreUsuario", nullable = false)
+    val nombreUsuario: String,
+)
